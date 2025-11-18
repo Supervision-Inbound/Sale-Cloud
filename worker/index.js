@@ -1,0 +1,1 @@
+// TODO: Implementar lógica completa de API Worker. Demo placeholder.\n

@@ -1,0 +1,1 @@
+// TODO: Implementar la lógica de frontend. Demo placeholder.\n

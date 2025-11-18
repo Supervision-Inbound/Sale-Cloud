@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Workclouds · SII POS FULL</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color-scheme: dark;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(circle at top, #020617, #020617);
+      color: #e5e7eb;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid #111827;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(3,7,18,.95);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+    .logo {
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      font-size: .8rem;
+    }
+    .badge {
+      border-radius: 999px;
+      border: 1px solid #1f2937;
+      padding: .25rem .7rem;
+      font-size: .75rem;
+      color: #9ca3af;
+    }
+    main {
+      max-width: 1200px;
+      margin: 1.5rem auto 2.5rem;
+      padding: 0 1rem;
+      width: 100%;
+    }
+    h1 {
+      font-size: 1.6rem;
+      margin-bottom: .3rem;
+    }
+    p.lead {
+      color: #9ca3af;
+      font-size: .9rem;
+      max-width: 640px;
+      line-height: 1.6;
+    }
+    .grid {
+      display: grid;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    @media (min-width: 960px) {
+      .grid {
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.4fr);
+      }
+    }
+    .card {
+      background: radial-gradient(circle at top left, #020617, #020617);
+      border-radius: 1.2rem;
+      padding: 1.2rem;
+      border: 1px solid #111827;
+      box-shadow: 0 24px 60px rgba(0,0,0,.7);
+    }
+    .card h2 {
+      font-size: 1rem;
+      margin: 0 0 .3rem;
+    }
+    .card p {
+      font-size: .78rem;
+      color: #9ca3af;
+      margin-top: 0;
+      margin-bottom: .7rem;
+    }
+    label {
+      display: block;
+      font-size: .7rem;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      margin-bottom: .2rem;
+      color: #6b7280;
+    }
+    input, select {
+      width: 100%;
+      padding: .55rem .7rem;
+      border-radius: .7rem;
+      border: 1px solid #1f2937;
+      background: #020617;
+      color: #e5e7eb;
+      font-size: .85rem;
+      outline: none;
+    }
+    input:focus, select:focus {
+      border-color: #6366f1;
+      box-shadow: 0 0 0 1px rgba(99,102,241,.5);
+    }
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .7rem;
+    }
+    .row + .row { margin-top: .6rem; }
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: .6rem 1rem;
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      margin-top: .7rem;
+      background: linear-gradient(135deg, #6366f1, #ec4899);
+      color: white;
+    }
+    button.secondary {
+      background: transparent;
+      border: 1px solid #1f2937;
+      color: #e5e7eb;
+    }
+    button:disabled { opacity: .5; cursor: not-allowed; }
+    .tabs {
+      display: flex;
+      gap: .4rem;
+      margin-bottom: .8rem;
+      flex-wrap: wrap;
+    }
+    .tab {
+      padding: .35rem .8rem;
+      border-radius: 999px;
+      border: 1px solid #1f2937;
+      font-size: .7rem;
+      cursor: pointer;
+      color: #9ca3af;
+      background: transparent;
+    }
+    .tab.active {
+      background: #111827;
+      color: #e5e7eb;
+      border-color: #4b5563;
+    }
+    .section-title {
+      font-size: .78rem;
+      text-transform: uppercase;
+      letter-spacing: .16em;
+      color: #6b7280;
+      margin-top: .9rem;
+      margin-bottom: .3rem;
+    }
+    .status {
+      font-size: .75rem;
+      color: #9ca3af;
+      margin-top: .25rem;
+    }
+    .list {
+      border-top: 1px dashed #1f2937;
+      margin-top: .6rem;
+      padding-top: .4rem;
+      max-height: 190px;
+      overflow: auto;
+    }
+    .item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: .5rem;
+      font-size: .78rem;
+      padding: .3rem 0;
+      border-bottom: 1px dashed rgba(31,41,55,.7);
+    }
+    .chips { display: flex; flex-wrap: wrap; gap: .25rem; }
+    .chip {
+      padding: .15rem .5rem;
+      border-radius: 999px;
+      border: 1px solid #374151;
+      font-size: .65rem;
+      color: #9ca3af;
+    }
+    pre {
+      background: #020617;
+      border-radius: .9rem;
+      border: 1px solid #111827;
+      padding: .8rem;
+      font-size: .75rem;
+      max-height: 260px;
+      overflow: auto;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+    .login-wrap {
+      max-width: 400px;
+      margin: 4rem auto 0;
+    }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">WORKCLOUDS · SII POS FULL</div>
+    <div class="badge" id="userBadge">No autenticado</div>
+  </header>
+  <main>
+    <div id="loginView" class="login-wrap">
+      <div class="card">
+        <h2>Iniciar sesión</h2>
+        <p>Demo: <code>admin@demo.cl</code> / <code>admin123</code></p>
+        <label>Email</label>
+        <input id="loginEmail" type="email" placeholder="admin@demo.cl" />
+        <label style="margin-top:.6rem;">Contraseña</label>
+        <input id="loginPassword" type="password" placeholder="••••••••" />
+        <button id="btnLogin">Entrar</button>
+        <div class="status" id="loginStatus"></div>
+      </div>
+    </div>
+
+    <div id="appView" class="hidden">
+      <h1>Panel general</h1>
+      <p class="lead">
+        Administra tenants, empleados, productos, ventas y boletas electrónicas demo
+        desde una sola interfaz.
+      </p>
+
+      <div class="grid">
+        <section class="card">
+          <div class="tabs">
+            <button class="tab active" data-tab="tenants">Tenants</button>
+            <button class="tab" data-tab="employees">Empleados</button>
+            <button class="tab" data-tab="products">Productos</button>
+          </div>
+          <div class="tab-panel" data-panel="tenants">
+            <h2>Tenants / Empresas</h2>
+            <p>Crea empresas que usarán tu ecosistema (minimarkets, locales, etc.).</p>
+
+            <div class="row">
+              <div>
+                <label>Nombre comercial</label>
+                <input id="tenantName" placeholder="Minimarket Las Flores" />
+              </div>
+              <div>
+                <label>RUT Emisor</label>
+                <input id="tenantRut" placeholder="11111111-1" />
+              </div>
+            </div>
+            <div class="row">
+              <div>
+                <label>Giro</label>
+                <input id="tenantGiro" placeholder="Minimarket / Retail" />
+              </div>
+              <div>
+                <label>Comuna</label>
+                <input id="tenantComuna" placeholder="Santiago" />
+              </div>
+            </div>
+            <div style="margin-top:.6rem;">
+              <label>Dirección</label>
+              <input id="tenantDireccion" placeholder="Calle Falsa 123" />
+            </div>
+            <button id="btnCreateTenant">Crear tenant</button>
+            <div class="status" id="tenantStatus"></div>
+            <div class="section-title">Listado</div>
+            <div class="list" id="tenantList"></div>
+          </div>
+
+          <div class="tab-panel hidden" data-panel="employees">
+            <h2>Empleados</h2>
+            <p>Asocia cajeros / operadores a un tenant específico.</p>
+
+            <label>Tenant</label>
+            <select id="employeeTenantSelect">
+              <option value="">— Selecciona tenant —</option>
+            </select>
+
+            <div class="row" style="margin-top:.6rem;">
+              <div>
+                <label>Nombre</label>
+                <input id="employeeName" placeholder="Juan Pérez" />
+              </div>
+              <div>
+                <label>Email</label>
+                <input id="employeeEmail" type="email" placeholder="cajero@demo.cl" />
+              </div>
+            </div>
+            <div style="margin-top:.6rem;">
+              <label>Rol</label>
+              <select id="employeeRole">
+                <option value="EMPLOYEE">Cajero / Employee</option>
+              </select>
+            </div>
+            <button id="btnCreateEmployee">Crear empleado</button>
+            <div class="status" id="employeeStatus"></div>
+
+            <div class="section-title">Empleados del tenant</div>
+            <div class="list" id="employeeList"></div>
+          </div>
+
+          <div class="tab-panel hidden" data-panel="products">
+            <h2>Productos / Stock</h2>
+            <p>Administra catálogo, precios y stock por tenant.</p>
+
+            <label>Tenant</label>
+            <select id="productTenantSelect">
+              <option value="">— Selecciona tenant —</option>
+            </select>
+
+            <div class="row" style="margin-top:.6rem;">
+              <div>
+                <label>Nombre producto</label>
+                <input id="productName" placeholder="Bebida 1.5L" />
+              </div>
+              <div>
+                <label>Código de barras</label>
+                <input id="productBarcode" placeholder="7800000000000" />
+              </div>
+            </div>
+            <div class="row" style="margin-top:.6rem;">
+              <div>
+                <label>Precio (CLP)</label>
+                <input id="productPrice" type="number" min="0" value="1000" />
+              </div>
+              <div>
+                <label>Stock</label>
+                <input id="productStock" type="number" min="0" value="10" />
+              </div>
+            </div>
+            <button id="btnCreateProduct">Crear producto</button>
+            <div class="status" id="productStatus"></div>
+
+            <div class="section-title">Catálogo</div>
+            <div class="list" id="productList"></div>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="tabs">
+            <button class="tab active" data-tab="pos">POS / Venta</button>
+            <button class="tab" data-tab="dte">DTE</button>
+            <button class="tab" data-tab="dashboard">Dashboard</button>
+          </div>
+
+          <div class="tab-panel" data-panel="pos">
+            <h2>POS / Ventana de venta</h2>
+            <p>Simula una caja: escanea o ingresa el código de barras, arma el carrito y registra la venta.</p>
+
+            <label>Tenant</label>
+            <select id="posTenantSelect">
+              <option value="">— Selecciona tenant —</option>
+            </select>
+
+            <div class="row" style="margin-top:.6rem;">
+              <div>
+                <label>Código de barras</label>
+                <input id="posBarcode" placeholder="Escanea aquí" />
+              </div>
+              <div>
+                <label>Cantidad</label>
+                <input id="posQty" type="number" min="1" value="1" />
+              </div>
+            </div>
+            <button id="btnAddToCart">Agregar al carrito</button>
+
+            <div class="section-title">Carrito</div>
+            <div class="list" id="cartList"></div>
+
+            <div class="row" style="margin-top:.6rem;">
+              <div>
+                <label>Total</label>
+                <input id="cartTotal" disabled value="0" />
+              </div>
+              <div>
+                <label>&nbsp;</label>
+                <button id="btnConfirmSale">Confirmar venta</button>
+              </div>
+            </div>
+
+            <div class="status" id="posStatus"></div>
+          </div>
+
+          <div class="tab-panel hidden" data-panel="dte">
+            <h2>DTE · Boletas demo</h2>
+            <p>Genera boletas demo asociadas a un tenant y simula envío a SII.</p>
+
+            <label>Tenant</label>
+            <select id="dteTenantSelect">
+              <option value="">— Selecciona tenant —</option>
+            </select>
+
+            <div class="row" style="margin-top:.6rem;">
+              <div>
+                <label>RUT Receptor</label>
+                <input id="dteRutReceptor" placeholder="66666666-6" />
+              </div>
+              <div>
+                <label>Monto</label>
+                <input id="dteMonto" type="number" value="12000" />
+              </div>
+            </div>
+            <div style="margin-top:.6rem;">
+              <label>Tipo DTE</label>
+              <select id="dteTipo">
+                <option value="39">39 · Boleta Electrónica</option>
+                <option value="41">41 · Boleta Exenta</option>
+              </select>
+            </div>
+
+            <button id="btnGenerateDte">Generar boleta</button>
+            <button id="btnSendLastDte" class="secondary">Enviar última boleta (simulado)</button>
+            <div class="status" id="dteStatus"></div>
+
+            <div class="section-title">DTE recientes</div>
+            <div class="list" id="dteList"></div>
+          </div>
+
+          <div class="tab-panel hidden" data-panel="dashboard">
+            <h2>Dashboard de ventas</h2>
+            <p>Resumen simple de ventas por tenant.</p>
+
+            <label>Tenant</label>
+            <select id="dashTenantSelect">
+              <option value="">— Selecciona tenant —</option>
+            </select>
+
+            <button id="btnLoadSummary" style="margin-top:.6rem;">Actualizar resumen</button>
+            <div class="status" id="dashStatus"></div>
+
+            <div class="section-title">Resumen</div>
+            <pre id="dashOutput">Sin datos aún.</pre>
+
+            <div class="section-title">Log / Respuestas</div>
+            <pre id="output">Esperando acciones...</pre>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+  <script src="./app.js"></script>
+</body>
+</html>

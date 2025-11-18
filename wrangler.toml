@@ -1,0 +1,7 @@
+name = "sii-pos-full"
+main = "worker/index.js"
+compatibility_date = "2024-04-01"
+
+[vars]
+APP_NAME = "SII POS FULL"
+SII_ENV = "sandbox"
